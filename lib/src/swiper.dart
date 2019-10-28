@@ -79,6 +79,8 @@ class Swiper extends StatefulWidget {
   ///Called when tap
   final SwiperOnTap onTap;
 
+  final GestureDragUpdateCallback onHorizontalDragUpdate;
+
   ///The swiper pagination plugin
   final SwiperPlugin pagination;
 
@@ -125,6 +127,7 @@ class Swiper extends StatefulWidget {
     this.onIndexChanged,
     this.index,
     this.onTap,
+    this.onHorizontalDragUpdate,
     this.control,
     this.loop: true,
     this.curve: Curves.ease,
@@ -169,6 +172,7 @@ class Swiper extends StatefulWidget {
     ValueChanged<int> onIndexChanged,
     int index,
     SwiperOnTap onTap,
+    GestureDragUpdateCallback onHorizontalDragUpdate,
     bool loop: true,
     Curve curve: Curves.ease,
     Axis scrollDirection: Axis.horizontal,
@@ -234,6 +238,7 @@ class Swiper extends StatefulWidget {
     ValueChanged<int> onIndexChanged,
     int index,
     SwiperOnTap onTap,
+    GestureDragUpdateCallback onHorizontalDragUpdate,
     bool loop: true,
     Curve curve: Curves.ease,
     Axis scrollDirection: Axis.horizontal,
@@ -268,6 +273,7 @@ class Swiper extends StatefulWidget {
         onIndexChanged: onIndexChanged,
         index: index,
         onTap: onTap,
+        onHorizontalDragUpdate:onHorizontalDragUpdate,
         curve: curve,
         key: key,
         scrollDirection: scrollDirection,
@@ -389,6 +395,9 @@ class _SwiperState extends _SwiperTimerMixin {
       onTap: () {
         this.widget.onTap(index);
       },
+      onHorizontalDragUpdate:(detail){
+        this.widget.onHorizontalDragUpdate(detail);
+      }
       child: widget.itemBuilder(context, index),
     );
   }
@@ -462,7 +471,7 @@ class _SwiperState extends _SwiperTimerMixin {
 
   Widget _buildSwiper() {
     IndexedWidgetBuilder itemBuilder;
-    if (widget.onTap != null) {
+    if (widget.onTap != null || widget.onHorizontalDragUpdate != null) {
       itemBuilder = _wrapTap;
     } else {
       itemBuilder = widget.itemBuilder;
