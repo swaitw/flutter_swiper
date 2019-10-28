@@ -397,7 +397,7 @@ class _SwiperState extends _SwiperTimerMixin {
       },
       onHorizontalDragUpdate:(detail){
         this.widget.onHorizontalDragUpdate(detail);
-      }
+      },
       child: widget.itemBuilder(context, index),
     );
   }
